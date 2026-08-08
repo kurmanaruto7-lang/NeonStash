@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEON STASH // Arcade</title>
+<title>NEON STASH</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
@@ -46,28 +46,6 @@
     z-index:9999;
     mix-blend-mode:overlay;
   }
-
-  /* ---------- marquee ---------- */
-  .marquee-wrap{
-    background:linear-gradient(90deg, var(--pink), var(--violet), var(--cyan));
-    background-size:200% 100%;
-    animation:shift 8s linear infinite;
-    padding:6px 0;
-    overflow:hidden;
-    white-space:nowrap;
-    border-bottom:2px solid #000;
-  }
-  @keyframes shift{ 0%{background-position:0% 0} 100%{background-position:200% 0} }
-  .marquee{
-    display:inline-block;
-    padding-left:100%;
-    animation:scroll 40s linear infinite;
-    font-family:'Press Start 2P', monospace;
-    font-size:10px;
-    color:#0b0313;
-    letter-spacing:1px;
-  }
-  @keyframes scroll{ 0%{transform:translateX(0)} 100%{transform:translateX(-100%)} }
 
   /* ---------- header ---------- */
   header{
@@ -442,7 +420,7 @@
   #siteContent.locked{ display:none; }
 
   @media (prefers-reduced-motion: reduce){
-    .marquee, .marquee-wrap, .card, .spinner{ animation:none !important; }
+    .card, .spinner{ animation:none !important; }
   }
 </style>
 </head>
@@ -460,29 +438,25 @@
 
   <div id="siteContent" class="locked">
 
-  <div class="marquee-wrap">
-    <div class="marquee" id="marqueeText">LOADING TITLES —— </div>
-  </div>
-
   <header>
     <h1 class="logo">NEON<span>STASH</span></h1>
-    <p class="tagline">an arcade cabinet with too many buttons</p>
-    <div class="count-chip" id="countChip">counting cartridges…</div>
+    <p class="tagline">a members-only cabinet</p>
+    <div class="count-chip" id="countChip">counting entries…</div>
   </header>
 
   <div class="controls">
-    <input id="search" type="text" placeholder="Search the stash… (try 'sonic', 'tanks', 'idle')" autocomplete="off">
+    <input id="search" type="text" placeholder="Search the stash…" autocomplete="off">
   </div>
 
   <div class="letter-rail" id="letterRail"></div>
 
   <main id="main">
-    <div class="empty-state" id="emptyState" style="display:none;">No cartridges match that search. Try another title.</div>
+    <div class="empty-state" id="emptyState" style="display:none;">No matches. Try another search.</div>
     <div id="sections"></div>
   </main>
 
   <footer>
-    Built for personal use · game files load from their original public hosting · all rights belong to their respective owners
+    Built for personal use · content loads from its original public hosting · all rights belong to their respective owners
   </footer>
 
   </div><!-- /siteContent -->
@@ -490,7 +464,7 @@
   <div class="player-backdrop" id="playerBackdrop">
     <div class="player-window" id="playerWindow">
       <div class="player-titlebar">
-        <div class="player-title" id="playerTitle">GAME</div>
+        <div class="player-title" id="playerTitle">ITEM</div>
         <div class="player-actions">
           <button class="player-btn" id="fullscreenBtn" title="Fullscreen">⛶ Fullscreen</button>
           <button class="player-btn" id="newTabBtn" title="Open in new tab">↗ New Tab</button>
@@ -579,11 +553,9 @@ ALPHA.forEach(l => byLetter[l] = []);
 GAMES.forEach(g => { byLetter[letterOf(g.name)].push(g); });
 ALPHA.forEach(l => byLetter[l].sort((a,b)=>a.name.localeCompare(b.name)));
 
-document.getElementById('countChip').textContent = GAMES.length.toLocaleString() + ' cartridges loaded';
+document.getElementById('countChip').textContent = GAMES.length.toLocaleString() + ' entries loaded';
 
 // marquee sample
-const sample = [...GAMES].sort(()=>Math.random()-0.5).slice(0,40).map(g=>g.name.toUpperCase());
-document.getElementById('marqueeText').textContent = sample.join('   ///   ') + '   ///   ';
 
 // letter rail
 const rail = document.getElementById('letterRail');
@@ -697,7 +669,7 @@ function launch(file, name){
       iframe.addEventListener('load', ()=>{ playerLoading.style.display = 'none'; }, {once:true});
     })
     .catch(()=>{
-      playerLoading.innerHTML = 'COULD NOT LOAD THIS CARTRIDGE<br><span style="font-size:9px;color:var(--dim);margin-top:8px;display:inline-block;">the source file may have moved, or your network is blocking both mirrors</span>';
+      playerLoading.innerHTML = 'COULD NOT LOAD THAT ITEM<br><span style="font-size:9px;color:var(--dim);margin-top:8px;display:inline-block;">the source file may have moved, or your network is blocking both mirrors</span>';
     });
 }
 
