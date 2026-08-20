@@ -1,0 +1,13 @@
+{
+  "name": "neonstash-server",
+  "version": "1.0.0",
+  "description": "NeonStash site + built-in proxy tab, one server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "node-fetch": "^2.7.0"
+  }
+}
